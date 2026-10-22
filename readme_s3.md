@@ -24,9 +24,10 @@ Data are available over multiple geographic domains:
 | Initial GEC data release | GEC water levels and waves | 2022 | 0.9 |
 | GEC water level datasets re-computed by filling gaps in historical observation record using machine learning | GEC water levels | 2023 | 1.0 |
 | GEC water level datasets re-computed to correct long-term trends | GEC water levels| 2024 | 1.1 |
-| GEC wave datasets re-computed to improve amplitude and phase during extreme events. Data were also re-chunked to improve cloud-based access speed. | GEC waves | 2026 | 1.1.1 |
-| S3 bucket directories re-structured | No change to data, only to access paths | 2026 | 1.1.1 |
-| Initial PAC data release | PAC water levels and waves | 2026 | 1.1.1 |
+| GEC wave datasets re-computed to improve amplitude and phase during extreme events. Data were also re-chunked to improve cloud-based access speed. | GEC waves | Jun. 2026 | 1.1.1 |
+| S3 bucket directories re-structured | No change to data, only to access paths | Jun. 2026 | 1.1.1 |
+| Initial PAC data release | PAC water levels and waves | Oct. 2026 | 1.1.1 |
+| Intake catalog files updated to include Pacific domain and remove version dependence | Intake files | Oct. 2026 | 1.1.1 |
 
 > [!NOTE]
 > v0.9 is now deprecated. GEC water levels utilized fewer observations for assimilation.

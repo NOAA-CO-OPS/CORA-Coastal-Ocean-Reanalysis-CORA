@@ -1,0 +1,111 @@
+Keywords: Coastal, Ocean, Reanalysis, Modeled Water Levels, Modeled Waves, High-Resolution, Gridded Data, Community Modeling
+
+Summary: NOAA’s Coastal Ocean ReAnalysis (CORA) couples long-term water level observations with hydrodynamic modeling to create historical information between tide stations. CORA water levels are simulated with the ocean circulation model ADvanced CIRCulation (ADCIRC) coupled with the phase-averaging Simulating WAves Nearshore (SWAN) model to produce surface gravity wave spectra and account for time-averaged wave contributions. Coastal water level observations from the NOAA’s National Water Level Observation Network (NWLON) are low-pass filtered and assimilated into the model to account for long-term sea level variability and reduce model errors. As of September, 2026, domains include the U.S. East and Gulf coasts (CORA-GEC) and the U.S. West coast, Hawaii, and southern Alaska (CORA-PAC).  The time period of the reanalysis is 1979-2022 (inclusive) for the GEC and 1979-2025 (inclusive) for the PAC, with each year modeled independently.
+
+Acknowledgment: NOAA’s Coastal Ocean Reanalysis wouldn’t be possible without the expertise,  guidance, computing resources, and support provided by the Renaissance Computing Institute (RENCI) at the University of North Carolina. Technical assistance and model validation were provided by experts at the University of Hawaii’s Sea Level Center. Observations from NOAA’s National Water Level Observation Network (NWLON) are at the foundation of CORA datasets. Special thanks to our partners at Tetra Tech for data management and cloud-based product development including optimization, interpolation, generation of derived products for the 500 m grid, and visualization. Additional thanks to NOAA’s Center for Operational Oceanographic Products and Services (CO-OPS), NOAA’s Office of Coastal Management (OCM), NOAA’s Integrated Ocean Observing System (IOOS), NOAA’s Office of the Chief Information Officer (OCIO), and the NOAA Open Data Dissemination (NODD) team for their contributions to the development and dissemination of CORA.
+
+Comment: CORA >= v1.1.1 is the only dataset suitable for research and application. All previous datasets (e.g. v0.9 and v1.0) should be considered prototype only and are not suitable for research and application. See the Change Log for more info.
+
+Creator_name: NOAA’s Center for Operational Oceanographic Products and Services (CO-OPS) in collaboration with Renaissance Computing Institute (RENCI) at the University of North Carolina.
+
+Creator_url: https://tidesandcurrents.noaa.gov/
+
+Creator_email: tide.predictions@noaa.gov
+
+History: Modeling methods developed by RENCI at the University of North Carolina. Data are also interpolated by Tetra Tech onto a grid developed by NOAA’s Office of Coast Management (OCM). 
+
+ID: CORA
+
+License: These data are produced by NOAA and are not subject to copyright protection in the United States. NOAA waives any potential copyright and related rights in these data worldwide through the Creative Commons Universal Public Domain Dedication (CC0-1.0). Pursuant to 17 U.S.C. 403, third parties producing copyrighted (compilation) works consisting predominantly of material created by Federal Government employees are encouraged to provide notice with such work(s) identifying the U.S. Government material incorporated and stating that such material is not subject to copyright protection.
+
+Naming_authority: tide.predictions@noaa.gov
+
+Project: NOAA’s Coastal Ocean Reanalysis (CORA) 
+
+Processing_level: Level 3 -  Gridded product derived from multiple datasets. 
+
+Publisher_name: NOAA’s Open Data Dissemination (NODD) Platform
+
+Publisher_url: https://registry.opendata.aws/noaa-nos-cora/ 
+
+Publisher_email: tide.predictions@noaa.gov
+
+_FillValue: -99999.0
+
+Source_model: ADCIRC padcswan 56.x
+
+Source_grid: NOMAD mesh v1e MSL - fixed bahamas bathy
+
+Convention: CF-1.7 ACDD-1.3
+
+Model: ADCIRC
+
+Model_version: 56.x
+
+Grid_type: Irregular triangular native mesh, then interpolated to 500 m resolution grid cells along the coastline
+
+Description: Reanalysis-NOAA 
+
+Datum: Mean Sea Level (MSL)
+
+Agrid: NOMAD mesh v1e MSL - fixed bahamas bathy
+
+Rundes: Reanalysis-NOAA
+
+Runid: (p)adcswan 56.x
+
+Title: CORA
+
+Institution: RENCI
+
+Source: RENCI_HPC
+
+History: See Change Log.
+
+References: http://www.renci.org, http://renci.org/reanalysis, Frontiers in Marine Science
+
+Host: AWS S3, made openly available by NOAA’s Open Data Dissemination (NODD) program
+
+Naming_Convention: CORA: Coastal Ocean Reanalysis; GEC: Gulf, Atlantic, and Caribbean; PAC: Pacific, Hawaii, and southern Alaska; cora_gec: GEC domain; cora_pac: PAC domain
+
+Temporal_Coverage: 1979-2022 (inclusive) for GEC domain, 1979-2025 (inclusive) for PAC domain
+
+Temporal_Resolution: Hourly
+
+File_Format: NetCDF (.nc), virtual zarr stores (.zarr)
+
+Atmospheric_Forcing: ERA5
+
+File_Descriptions: 
+Native grid datasets: 
+{domain}/native_grid/water_levels/fort.63_*.nc: hourly water elevation time series at all mesh nodes
+{domain}/native_grid/water_levels/maxele.63_YYYY.nc: monthly maximum water levels at all mesh nodes
+{domain}/native_grid/waves/swan_DIR.63_*.nc: hourly mean wave direction timeseries at all mesh nodes
+{domain}/native_grid/waves/swan_HS.63_*.nc: hourly significant wave height timeseries at all mesh nodes
+{domain}/native_grid/waves/swan_TP.63_*.nc: hourly spectral peak wave period timeseries at all mesh nodes
+{domain}/native_grid/fort.14: native irregular triangular mesh
+
+500 m grid interpolated water level and derived datasets: 
+{domain}/500m_grid/water_levels/500m_grid_zeta_YYYYMMDD.nc:  hourly water elevation time series on a 500 m resolution regular grid
+{domain}/500m_grid/derived_products/daily_max/daily_max_YYYYMM.nc: daily maximum water levels on a 500 m resolution regular grid
+{domain}/500m_grid/derived_products/monthly_statistics/monthly_tidal_YYYY.nc: monthly tidal statistics on a 500 m resolution regular grid
+{domain}/500m_grid/derived_products/peaks_over_threshold/peaks.nc: peaks above multiple thresholds on a 500 m resolution regular grid
+
+Native grid shoreline water level and derived datasets: 
+{domain}/native_grid_shoreline/water_levels/water_levels/STATE.nc: hourly water elevation time series and tidal datums at mesh nodes comprising the state’s shoreline 
+{domain}/native_grid_shoreline/derived_products/beta.h5: sea level anomaly adjustment factor at mesh nodes comprising the shoreline (used for HTF predictions) 
+{domain}/native_grid_shoreline/derived_products/tide_constits.h5: tidal constituents at mesh nodes comprising the shoreline 
+{domain}/native_grid_shoreline/derived_products/htf_predictions/yyyy-mm/STATE.nc: output of NOAA’s experimental high resolution monthly high tide flooding outlook at mesh nodes comprising the state’s shoreline run on yyyy-mm
+
+Supporting files: 
+CORA_intake.yml: catalog for use with the intake Python package to facilitate cloud-based data access (see example Notebooks).
+CORA_intake_zarr3.yml: Same as above but for use with zarr>=v3.0
+metadata.txt: this file
+
+Geographic_Coordinate_System: WGS84
+
+Contact: tide.predictions@noaa.gov
+
+Date_Created: 2024-10-17 14:10:26 -04:00
+
+Date_Modified: 2026-10-20 09:30:00 -04:00
