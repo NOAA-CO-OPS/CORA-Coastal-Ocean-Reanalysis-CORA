@@ -101,6 +101,7 @@ Supporting files:
 CORA_intake.yml: catalog for use with the intake Python package to facilitate cloud-based data access (see example Notebooks).
 CORA_intake_zarr3.yml: Same as above but for use with zarr>=v3.0
 metadata.txt: this file
+README.md: Dataset description
 
 Geographic_Coordinate_System: WGS84
 
