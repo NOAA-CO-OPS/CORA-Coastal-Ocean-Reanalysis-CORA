@@ -25,4 +25,5 @@ dependencies:
       - geopy
       - holoviews
       - geoviews
-      - zarr==2.18.7
+      - tadc
+      - zarr
