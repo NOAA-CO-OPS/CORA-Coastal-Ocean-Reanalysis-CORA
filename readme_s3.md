@@ -27,7 +27,8 @@ Data are available over multiple geographic domains:
 | GEC wave datasets re-computed to improve amplitude and phase during extreme events. Data were also re-chunked to improve cloud-based access speed. | GEC waves | Jun. 2026 | 1.1.1 |
 | S3 bucket directories re-structured | No change to data, only to access paths | Jun. 2026 | 1.1.1 |
 | Initial PAC data release | PAC water levels and waves | Oct. 2026 | 1.1.1 |
-| Intake catalog files updated to include Pacific domain and remove version dependence | Intake files | Oct. 2026 | 1.1.1 |
+| Intake catalog files updated to include Pacific domain and remove version dependence | None | Oct. 2026 | 1.1.1 |
+| Supporting files updated to include `metadata.txt` and `README.md` | None | Oct. 2026 | 1.1.1 |
 
 > [!NOTE]
 > v0.9 is now deprecated. GEC water levels utilized fewer observations for assimilation.
