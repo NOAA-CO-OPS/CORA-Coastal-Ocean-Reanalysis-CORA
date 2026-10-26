@@ -1,0 +1,158 @@
+<h1 id="noaa-s-coastal-ocean-reanalysis-cora-">NOAA&#39;s Coastal Ocean Reanalysis (CORA)</h1>
+<h2 id="description">Description</h2>
+<p>NOAA&#39;s Coastal Ocean Reanalysis (CORA) provides re-analyzed wave and water level data and derived products for the U.S. coastlines. The data are produced by coupling ADCIRC (ADvanced CIRCulation Model) and SWAN (Simulating WAves Nearshore) and assimilating verified hourly water levels from the National Ocean Service’s Center of Operational Oceanographic Products &amp; Services (CO-OPS).</p>
+<h2 id="domains">Domains</h2>
+<p>Data are available over multiple geographic domains:</p>
+<ul>
+<li><p><strong>GEC (CONUS East and Gulf Coasts, and Caribbean):</strong></p>
+<ul>
+<li><strong>Time span:</strong> 1979 - 2022</li>
+<li><strong>Size:</strong> 40 TB</li>
+<li><strong>Domain bounds:</strong> Latitude: 5.8 to 45.8 ; Longitude: -98.0 to -53.8 ; 1983 Contiguous USA Albers projection (EPSG:5070)</li>
+<li><strong>Spatial resolution:</strong> Approx. 500 m at the coast, spatially variable</li>
+</ul>
+</li>
+<li><p><strong>PAC (CONUS West Coast, S.E. Alaska, and Hawaii):</strong></p>
+<ul>
+<li><strong>Time span:</strong> 1979 - 2025</li>
+<li><strong>Size:</strong> 40 TB</li>
+<li><strong>Domain bounds:</strong> Latitude: 9.7 to 61.5 ; Longitude: -187.6 to -110.0 ; 1983 Contiguous USA Albers projection (EPSG:5070)</li>
+<li><strong>Spatial resolution:</strong> Approx. 200 m at the coast, spatially variable</li>
+</ul>
+</li>
+</ul>
+<h2 id="change-log">Change Log</h2>
+<table>
+<thead>
+<tr>
+<th>Description</th>
+<th>Datasets affected</th>
+<th>Date</th>
+<th>Data Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Initial GEC data release</td>
+<td>GEC water levels and waves</td>
+<td>2022</td>
+<td>0.9</td>
+</tr>
+<tr>
+<td>GEC water level datasets re-computed by filling gaps in historical observation record using machine learning</td>
+<td>GEC water levels</td>
+<td>2023</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>GEC water level datasets re-computed to correct long-term trends</td>
+<td>GEC water levels</td>
+<td>2024</td>
+<td>1.1</td>
+</tr>
+<tr>
+<td>GEC wave datasets re-computed to improve amplitude and phase during extreme events. Data were also re-chunked to improve cloud-based access speed.</td>
+<td>GEC waves</td>
+<td>Jun. 2026</td>
+<td>1.1.1</td>
+</tr>
+<tr>
+<td>S3 bucket directories re-structured</td>
+<td>No change to data, only to access paths</td>
+<td>Jun. 2026</td>
+<td>1.1.1</td>
+</tr>
+<tr>
+<td>Initial PAC data release</td>
+<td>PAC water levels and waves</td>
+<td>Oct. 2026</td>
+<td>1.1.1</td>
+</tr>
+<tr>
+<td>Intake catalog files updated to include Pacific domain and remove version dependence</td>
+<td>None</td>
+<td>Oct. 2026</td>
+<td>1.1.1</td>
+</tr>
+<tr>
+<td>Supporting files updated to include <code>metadata.txt</code> and <code>README.md</code></td>
+<td>None</td>
+<td>Oct. 2026</td>
+<td>1.1.1</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!NOTE]
+v0.9 is now deprecated. GEC water levels utilized fewer observations for assimilation.</p>
+<p>v1.0 is now deprecated. GEC water levels exhibited erroneous long-term trends.</p>
+<p>v1.1 is now deprecated. GEC waves exhibted a low-bias and phase lag during extreme events due to a loosely-set convergence parameter.</p>
+</blockquote>
+<h2 id="known-issues">Known Issues</h2>
+<ol>
+<li>Data for the GEC domain cover the period 1979-2022, while data for the PAC domain extend three additional years (1979-2025). </li>
+<li>Cloud-based access to GEC water levels is slow due to a sub-optimal data chunking strategy.</li>
+<li>GEC wave data (Hs and Tp) flatline during the months of Nov 2001 and Aug 2004. The source of the issue is corrupted meteroloigcal forcing files during those time periods.</li>
+<li>PAC water levels show an energetic oscillation with a period of ~16 hr. This artefact is present throughout the domain for the entire time period, though is particularly energetic - with amplitudes on the order of 0.25-0.5 m - during Jan 2011 and Jan 2019.</li>
+<li>PAC water levels diverge from observations by 10s of cm at multiple gauges during Jun-Dec 2009 and Mar-Aug 2019.</li>
+</ol>
+<h2 id="directory-structure-and-dataset-description">Directory Structure and Dataset Description</h2>
+<pre><code class="lang-text">.
+├── cora_gec/                                     <span class="hljs-meta"># CONUS East and Gulf Coasts, and Caribbean domain</span>
+│   ├── native_grid/                              <span class="hljs-meta"># ADCIRC-native irregular triangular grid</span>
+│   │   ├── water_levels/                         <span class="hljs-meta"># Water level data relative to MSL</span>
+│   │   │   ├── fort<span class="hljs-number">.63</span><span class="hljs-literal">_</span>[TIME].[nc|zarr]          <span class="hljs-meta"># Hourly water levels</span>
+│   │   │   └── maxele<span class="hljs-number">.63</span><span class="hljs-literal">_</span>[TIME].[nc|zarr]        <span class="hljs-meta"># Yearly maximum water levels</span>
+│   │   ├── waves/                                <span class="hljs-meta"># Bulk wave parameter data</span>
+│   │   │   ├── swan_DIR<span class="hljs-number">.63</span><span class="hljs-literal">_</span>[TIME]<span class="hljs-literal">_</span>[CHUNK].[nc|zarr] <span class="hljs-meta"># Hourly mean wave direction</span>
+│   │   │   ├── swan_HS<span class="hljs-number">.63</span><span class="hljs-literal">_</span>[TIME]<span class="hljs-literal">_</span>[CHUNK].[nc|zarr]  <span class="hljs-meta"># Hourly significant wave height</span>
+│   │   │   └── swan_TPS<span class="hljs-number">.63</span><span class="hljs-literal">_</span>[TIME]<span class="hljs-literal">_</span>[CHUNK].[nc|zarr] <span class="hljs-meta"># Hourly spectral peak wave period</span>
+│   │   └── fort<span class="hljs-number">.14</span>                               <span class="hljs-meta"># Grid file describing mesh and bathymetry</span>
+│   │
+│   ├── <span class="hljs-number">500</span>m_grid/                                <span class="hljs-meta"># Re-interpolated 500 m resolution regular grid</span>
+│   │   ├── derived_products/                     <span class="hljs-meta"># Data products derived from the data.</span>
+│   │   │   ├── daily_max/                        <span class="hljs-meta"># Daily max water levels (by YYYYMM)</span>
+│   │   │   ├── monthly_statistics/               <span class="hljs-meta"># Monthly tidal stats (by YYYY)</span>
+│   │   │   └── peaks_over_threshold/             <span class="hljs-meta"># Water level exceedances above multiple thresholds.</span>
+│   │   └── water_levels/                         <span class="hljs-meta"># Water level data relative to MSL</span>
+│   │       └── <span class="hljs-number">500</span>m_grid_zeta_YYYYMMDD.nc        <span class="hljs-meta"># Hourly water levels by date</span>
+│   │
+│   └── native_grid_shoreline/                    <span class="hljs-meta"># Data along a shoreline extracted from the native_grid.</span>
+│       ├── derived_products/                     <span class="hljs-meta"># Data products derived from the data.</span>
+│       │   ├── htf_predictions/                  <span class="hljs-meta"># Daily liklihoods of high tide flooding from CO-OPS's Experimental High Resolution Monthly High Tide Flooding Outlook.</span>
+│       │   ├── beta.h5                           <span class="hljs-meta"># Sea level anomaly adjustment factor</span>
+│       │   └── tide_constits.h5                  <span class="hljs-meta"># UTide-derived tidal constituents</span>
+│       └── water_levels/                         <span class="hljs-meta"># Water level data relative to MSL</span>
+│           └── [STATE].nc                        <span class="hljs-meta"># State-level hourly water levels</span>
+│           └── [STATE]_mm_[CHUNK].zarr           <span class="hljs-meta"># State-level hourly water levels in integer mm units.</span>
+│
+├── cora_pac/                                     <span class="hljs-meta"># CONUS West Coast, S.E. Alaska, and Hawaii domain</span>
+│   └── native_grid/                              <span class="hljs-meta"># ADCIRC-native irregular triangular grid</span>
+│       ├── water_levels/                         <span class="hljs-meta"># Water level data relative to MSL</span>
+│       │   ├── fort<span class="hljs-number">.63</span><span class="hljs-literal">_</span>[TIME]<span class="hljs-literal">_</span>[CHUNK].[nc|zarr]  <span class="hljs-meta"># Hourly water levels</span>
+│       │   └── maxele<span class="hljs-number">.63</span><span class="hljs-literal">_</span>[TIME].[nc|zarr]        <span class="hljs-meta"># Yearly maximum water levels</span>
+│       └── waves/                                <span class="hljs-meta"># Bulk wave parameter data</span>
+│           ├── swan_DIR<span class="hljs-number">.63</span><span class="hljs-literal">_</span>[TIME]<span class="hljs-literal">_</span>[CHUNK].[nc|zarr] <span class="hljs-meta"># Hourly mean wave direction</span>
+│           ├── swan_HS<span class="hljs-number">.63</span><span class="hljs-literal">_</span>[TIME]<span class="hljs-literal">_</span>[CHUNK].[nc|zarr]  <span class="hljs-meta"># Hourly significant wave height</span>
+│           └── swan_TPS<span class="hljs-number">.63</span><span class="hljs-literal">_</span>[TIME]<span class="hljs-literal">_</span>[CHUNK].[nc|zarr] <span class="hljs-meta"># Hourly spectral peak wave period</span>
+│
+├── CORA_V1<span class="hljs-number">.1</span>_intake.yml                          <span class="hljs-meta"># Inake catalog to be used with the intake Python package for accessing cloud-optimized datasets with zarr v2. See the GitHub repo for usage examples: https://github.com/NOAA-CO-OPS/CORA-Coastal-Ocean-Reanalysis-CORA</span>
+└── CORA_V1<span class="hljs-number">.1</span>_intake_zarr3.yml                    <span class="hljs-meta"># Inake catalog to be used with the intake Python package for accessing cloud-optimized datasets with zarr v3 or higher. See the GitHub repo for usage examples: https://github.com/NOAA-CO-OPS/CORA-Coastal-Ocean-Reanalysis-CORA</span>
+
+*Note: <span class="hljs-type"></span>[TIME] represents YYYY, YYYY-YYYY+<span class="hljs-number">3</span>, or full spans. [CHUNK] represents _map or _timeseries.*
+</code></pre>
+<h2 id="references-and-further-documentation">References and Further Documentation</h2>
+<ul>
+<li><a href="https://tidesandcurrents.noaa.gov/cora.html#usecase">CORA homepage</a> by NOAA&#39;s Center for Operational Oceanographic Products and Services</li>
+<li><a href="https://tidesandcurrents.noaa.gov/cora/data/Accessing_and_Downloading_Coastal_Ocean_Reanalysis_Data_User_Guide.pdf">CORA user guide</a> by NOAA&#39;s Center for Operational Oceanographic Products and Services</li>
+<li><a href="https://github.com/NOAA-CO-OPS/CORA-Coastal-Ocean-Reanalysis-CORA">CORA GitHub</a> including tutorials for working with the data  by NOAA&#39;s Center for Operational Oceanographic Products and Services</li>
+<li><a href="https://repository.library.noaa.gov/view/noaa/66833">NOAA Technical Report NOS CO-OPS 108</a>: NOAA’s Coastal Ocean Reanalysis: Gulf of Mexico, Atlantic, and Caribbean (January 2025) by Keeney, Analise; Dusek, Gregory; Callahan, John; Ratcliff, John; Jima, Tigist; Brooks, William; Marcy, Doug; Blanton, Brian; Tilson, Jeffrey; Asher, Taylor G.; Leuttich, Richard A.; Widlansky, Matthew J.; Rose, Linta; Morse, Cheryl; Haddad, Jana; &amp; Waring, Blake</li>
+<li><a href="https://doi.org/10.3389/fmars.2024.1381228">Assessment of water levels from 43 years of NOAA’s Coastal Ocean Reanalysis (CORA) for the Gulf of Mexico and East Coasts</a> by Rose, Linta; Widlansky, Matthew J.; Feng, Xue; Thompson, Thompson; Asher, Taylor G.; Dusek, Gregory; Blanton, Blanton; Luettich, Richard A. Jr.; Callahan, John; Brooks, William; Keeney, Analise; Haddad, Jana; Sweet, William; Genz, Ayesha; Hovenga, Paige; Marra, John &amp; Tilson, Jeffrey</li>
+<li><a href="https://doi.org/10.1371/journal.pone.0344695">Filling the gaps between tide gauges: Demonstrating high-resolution seasonal high tide flooding predictions using NOAA’s Coastal Ocean Reanalysis</a> by Conlin, Matthew; Dusek, Gregory; Ratcliff, John; Callahan, John; Kavanaugh, Karen; Brooks, William; Waring, Blake; Keeney, Analise; Sweet, William, &amp; Widlansky, Matthew</li>
+</ul>
+<h2 id="how-to-cite">How to cite</h2>
+<p>NOAA&#39;s Coastal Ocean Reanalysis (CORA) was accessed on <code>DATE</code> from <a href="https://registry.opendata.aws/noaa-nos-cora">https://registry.opendata.aws/noaa-nos-cora</a>.</p>
+<h2 id="license">License</h2>
+<p>NOAA data disseminated through NODD are open to the public and can be used as desired.NOAA makes data openly available to ensure maximum use of our data, and to spur and encourage exploration and innovation throughout the industry. NOAA requests attribution for the use or dissemination of unaltered NOAA data. However, it is not permissible to state or imply endorsement by or affiliation with NOAA. If you modify NOAA data, you may not state or imply that it is original, unaltered NOAA data.</p>
+<h2 id="contact">Contact</h2>
+<p>For questions regarding data content or quality, email CO-OPS.UserServices@noaa.gov This data is made available to the public through the NOAA Open Data Dissemination (NODD) Program. For questions regarding this program, email nodd@noaa.gov. We also seek to identify case studies on how NOAA data is being used and will be featuring those stories in joint publications and in upcoming events. If you are interested in seeing your story highlighted, please share it with the NOAA NODD team at nodd@noaa.gov.</p>
